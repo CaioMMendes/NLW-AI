@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         inputBorderLight: "#1f2937",
         inputBorderDark: "#27272a",
+        promptDark: "#121212",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

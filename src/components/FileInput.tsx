@@ -10,7 +10,7 @@ const FileInput = () => {
            border-inputBorderLight dark:border-inputBorderDark hover:bg-primary/5"
       >
         <File className="w-4 h-4" />
-        Carregar Arquivo
+        Selecionar Arquivo
       </label>
       <input
         type="file"
