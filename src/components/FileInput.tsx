@@ -9,6 +9,12 @@ import { getFFmpeg } from "@/lib/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 
 type Status = "waiting" | "converting" | "uploading" | "generating" | "success";
+const statusMessage = {
+  converting: "Convertendo...",
+  generating: "Transcrevendo...",
+  uploading: "Carregando...",
+  success: "Sucesso!",
+};
 
 const FileInput = () => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -66,7 +72,6 @@ const FileInput = () => {
 
     //converter vídeo em áudio
     const audioFile = await convertVideoToAudio(videoFile);
-    console.log(audioFile, prompt);
 
     const data = new FormData();
     data.append("file", audioFile);
@@ -78,7 +83,7 @@ const FileInput = () => {
     });
     const jsonResponse = await response.json();
     const videoId = jsonResponse.id;
-    console.log(videoId);
+
     setStatus("generating");
     const transcription = await fetch(
       `${baseURL}/videos/${videoId}/transcription`,
@@ -95,7 +100,6 @@ const FileInput = () => {
     );
     const jsonTranscription = await transcription.json();
     setStatus("success");
-    console.log(jsonTranscription);
   };
 
   const previewURL = useMemo(() => {
@@ -147,9 +151,20 @@ const FileInput = () => {
           placeholder="Inclua palavras-chave mencionadas no vídeo separadas por vírgula"
         />
       </div>
-      <Button type="submit" disabled={status !== "waiting"} className="w-full">
-        Enviar Arquivo
-        <Upload className="w-4 h-4 ml-2" />
+      <Button
+        type="submit"
+        disabled={status !== "waiting"}
+        className="w-full data-[success=true]:bg-emerald-400"
+        data-success={status === "success"}
+      >
+        {status === "waiting" ? (
+          <>
+            Enviar Arquivo
+            <Upload className="w-4 h-4 ml-2" />
+          </>
+        ) : (
+          statusMessage[status]
+        )}
       </Button>
     </form>
   );
