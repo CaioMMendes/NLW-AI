@@ -1,3 +1,4 @@
+"use client";
 import { Wand2 } from "lucide-react";
 import FileInput from "./FileInput";
 import { Button } from "./ui/button";
@@ -11,8 +12,12 @@ import {
 } from "./ui/select";
 import { Separator } from "./ui/separator";
 import { Slider } from "./ui/slider";
+import PromptSelect from "./PromptSelect";
 
-const SideBar = () => {
+export interface PromptSelectProps {
+  handlePromptSelected: (template: string) => void;
+}
+const SideBar = ({ handlePromptSelected }: PromptSelectProps) => {
   return (
     <div className="w-full flex flex-col  md:w-80 md:order-2 gap-y-4">
       <FileInput />
@@ -20,15 +25,7 @@ const SideBar = () => {
       <form className="flex gap-y-6 flex-col">
         <div className="flex flex-col gap-y-2">
           <Label>Prompt</Label>
-          <Select>
-            <SelectTrigger>
-              <SelectValue placeholder="Selecione um prompt..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="titulo">Título do youtube</SelectItem>
-              <SelectItem value="descricao">Descrição do youtube</SelectItem>
-            </SelectContent>
-          </Select>
+          <PromptSelect handlePromptSelected={handlePromptSelected} />
         </div>
 
         <div className="flex flex-col gap-y-2">
