@@ -13,11 +13,13 @@ import {
 import { Separator } from "./ui/separator";
 import { Slider } from "./ui/slider";
 import PromptSelect from "./PromptSelect";
+import { useState } from "react";
 
 export interface PromptSelectProps {
   handlePromptSelected: (template: string) => void;
 }
 const SideBar = ({ handlePromptSelected }: PromptSelectProps) => {
+  const [temperature, setTemperature] = useState<number>(0.5);
   return (
     <div className="w-full flex flex-col  md:w-80 md:order-2 gap-y-4">
       <FileInput />
@@ -45,7 +47,13 @@ const SideBar = ({ handlePromptSelected }: PromptSelectProps) => {
         <Separator />
         <div className="flex flex-col gap-y-4">
           <Label>Temperatura</Label>
-          <Slider min={0} max={1} step={0.05} defaultValue={[0.5]} />
+          <Slider
+            min={0}
+            max={1}
+            step={0.05}
+            value={[temperature]}
+            onValueChange={(value) => setTemperature(value[0])}
+          />
           <span className="block text-xs text-muted-foreground italic leading-relaxed">
             Valores mais altos tender a deixar o resultado mais criativo, porém,
             com mais chances de erros.
