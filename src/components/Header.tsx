@@ -9,13 +9,6 @@ const Header = () => {
 
       <div className="flex gap-4">
         <HandleTheme />
-        <Button
-          className="flex gap-1 hover:bg-primary hover:outline-none hover:border-primary dark:hover:text-primary-foreground"
-          variant="outline"
-        >
-          <GithubIcon size={24} />
-          Github
-        </Button>
       </div>
     </div>
   );

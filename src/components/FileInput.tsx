@@ -15,8 +15,11 @@ const statusMessage = {
   uploading: "Carregando...",
   success: "Sucesso!",
 };
+interface SetVideoProps {
+  setVideoId: (id: string) => void;
+}
 
-const FileInput = () => {
+const FileInput = ({ setVideoId }: SetVideoProps) => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [status, setStatus] = useState<Status>("waiting");
   const promptInputRef = useRef<HTMLTextAreaElement>(null);
@@ -100,6 +103,7 @@ const FileInput = () => {
     );
     const jsonTranscription = await transcription.json();
     setStatus("success");
+    setVideoId(videoId);
   };
 
   const previewURL = useMemo(() => {

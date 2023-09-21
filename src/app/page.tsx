@@ -2,17 +2,46 @@
 import Header from "@/components/Header";
 import SideBar from "@/components/SideBar";
 import TextAreas from "@/components/TextAreas";
+import { useGlobalContext } from "@/context/TemplateContext";
+import { useCompletion } from "ai/react";
 
 export default function Home() {
-  const handlePropmptSelected = (template: string) => {
-    console.log(template);
-  };
+  const { videoIdContext, temperatureContext } = useGlobalContext();
+  console.log(videoIdContext, temperatureContext);
+  const {
+    input,
+    setInput,
+    handleInputChange,
+    handleSubmit,
+    completion,
+    isLoading,
+  } = useCompletion({
+    api: `${process.env.NEXT_PUBLIC_BASE_URL}/ai/complete`,
+    body: {
+      videoId: videoIdContext,
+      temperature: temperatureContext,
+      AI: "chatGpt",
+    },
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  console.log(completion);
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex flex-1 p-5 gap-4 flex-col md:flex-row">
-        <TextAreas />
-        <SideBar handlePromptSelected={handlePropmptSelected} />
+        <TextAreas
+          input={input}
+          handleInputChange={handleInputChange}
+          completion={completion}
+        />
+        <SideBar
+          input={input}
+          setInput={setInput}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+        />
       </main>
     </div>
   );

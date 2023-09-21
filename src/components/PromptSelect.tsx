@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { PromptSelectProps } from "./SideBar";
+import { useGlobalContext } from "@/context/TemplateContext";
 
 interface Prompt {
   id: string;
@@ -15,7 +16,7 @@ interface Prompt {
   template: string;
 }
 
-const PromptSelect = ({ handlePromptSelected }: PromptSelectProps) => {
+const PromptSelect = ({ handlePromptSelected, input }: PromptSelectProps) => {
   const [prompts, setPrompts] = useState<Prompt[] | null>(null);
 
   useEffect(() => {
@@ -26,7 +27,6 @@ const PromptSelect = ({ handlePromptSelected }: PromptSelectProps) => {
       .then((response) => response.json())
       .then((data) => setPrompts(data));
   }, []);
-  console.log(prompts);
   const handlePromptSelectedTemplate = (promptId: string) => {
     const selectedPrompt = prompts?.find((prompt) => prompt.id === promptId);
     if (!selectedPrompt) {
@@ -34,8 +34,12 @@ const PromptSelect = ({ handlePromptSelected }: PromptSelectProps) => {
     }
     handlePromptSelected(selectedPrompt.template);
   };
+
   return (
-    <Select onValueChange={handlePromptSelectedTemplate}>
+    <Select
+      onValueChange={handlePromptSelectedTemplate}
+      defaultValue={undefined}
+    >
       <SelectTrigger>
         <SelectValue placeholder="Selecione um prompt..." />
       </SelectTrigger>

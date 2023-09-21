@@ -13,21 +13,47 @@ import {
 import { Separator } from "./ui/separator";
 import { Slider } from "./ui/slider";
 import PromptSelect from "./PromptSelect";
-import { useState } from "react";
+import { FormEventHandler, MouseEventHandler, useState } from "react";
+import { useGlobalContext } from "@/context/TemplateContext";
 
+export interface SideBarProps {
+  setInput: (input: string) => void;
+  input: string;
+  handleSubmit: FormEventHandler<HTMLFormElement> | undefined;
+  isLoading: boolean;
+}
 export interface PromptSelectProps {
   handlePromptSelected: (template: string) => void;
+  input: string;
 }
-const SideBar = ({ handlePromptSelected }: PromptSelectProps) => {
-  const [temperature, setTemperature] = useState<number>(0.5);
+const SideBar = ({
+  input,
+  setInput,
+  handleSubmit,
+  isLoading,
+}: SideBarProps) => {
+  const {
+    videoIdContext,
+    setVideoIdContext,
+    temperatureContext,
+    setTemperatureContext,
+  } = useGlobalContext();
+  const handleButtonClick = () => {
+    if (!videoIdContext) {
+      return alert("Faça o upload do vídeo");
+    }
+    if (input === "") {
+      return alert("Selecione um prompt");
+    }
+  };
   return (
     <div className="w-full flex flex-col  md:w-80 md:order-2 gap-y-4">
-      <FileInput />
+      <FileInput setVideoId={setVideoIdContext} />
       <Separator />
-      <form className="flex gap-y-6 flex-col">
+      <form onSubmit={handleSubmit} className="flex gap-y-6 flex-col">
         <div className="flex flex-col gap-y-2">
           <Label>Prompt</Label>
-          <PromptSelect handlePromptSelected={handlePromptSelected} />
+          <PromptSelect handlePromptSelected={setInput} input={input} />
         </div>
 
         <div className="flex flex-col gap-y-2">
@@ -51,8 +77,8 @@ const SideBar = ({ handlePromptSelected }: PromptSelectProps) => {
             min={0}
             max={1}
             step={0.05}
-            value={[temperature]}
-            onValueChange={(value) => setTemperature(value[0])}
+            value={[temperatureContext]}
+            onValueChange={(value) => setTemperatureContext(value[0])}
           />
           <span className="block text-xs text-muted-foreground italic leading-relaxed">
             Valores mais altos tender a deixar o resultado mais criativo, porém,
@@ -60,7 +86,12 @@ const SideBar = ({ handlePromptSelected }: PromptSelectProps) => {
           </span>
         </div>
         <Separator />
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isLoading}
+          onClick={handleButtonClick}
+        >
           Executar
           <Wand2 className="w-4 h-4 ml-2" />
         </Button>
