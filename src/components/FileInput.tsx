@@ -158,7 +158,7 @@ const FileInput = ({ setVideoId }: SetVideoProps) => {
       <Button
         type="submit"
         disabled={status !== "waiting"}
-        className="w-full data-[success=true]:bg-emerald-400"
+        className="w-full data-[success=true]:dark:bg-emerald-400 data-[success=true]:bg-emerald-600"
         data-success={status === "success"}
       >
         {status === "waiting" ? (
