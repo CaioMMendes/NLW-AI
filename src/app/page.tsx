@@ -7,7 +7,6 @@ import { useCompletion } from "ai/react";
 
 export default function Home() {
   const { videoIdContext, temperatureContext } = useGlobalContext();
-  console.log(videoIdContext, temperatureContext);
   const {
     input,
     setInput,
@@ -26,7 +25,6 @@ export default function Home() {
       "Content-type": "application/json",
     },
   });
-  console.log(completion);
   return (
     <div className="min-h-screen flex flex-col">
       <Header />

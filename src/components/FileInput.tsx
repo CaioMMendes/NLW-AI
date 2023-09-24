@@ -4,9 +4,18 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Separator } from "./ui/separator";
 import { Label } from "./ui/label";
-import { ChangeEvent, FormEvent, useMemo, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  FormEventHandler,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { getFFmpeg } from "@/lib/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { useGlobalContext } from "@/context/TemplateContext";
 
 type Status = "waiting" | "converting" | "uploading" | "generating" | "success";
 const statusMessage = {
@@ -22,6 +31,7 @@ interface SetVideoProps {
 const FileInput = ({ setVideoId }: SetVideoProps) => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [status, setStatus] = useState<Status>("waiting");
+  const { setShowTranscription, setTranscriptionContext } = useGlobalContext();
   const promptInputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleFileSelected = (event: ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +112,8 @@ const FileInput = ({ setVideoId }: SetVideoProps) => {
       }
     );
     const jsonTranscription = await transcription.json();
+
+    setTranscriptionContext(jsonTranscription.transcription);
     setStatus("success");
     setVideoId(videoId);
   };
@@ -113,6 +125,10 @@ const FileInput = ({ setVideoId }: SetVideoProps) => {
     setStatus("waiting");
     return URL.createObjectURL(videoFile);
   }, [videoFile]);
+
+  const handleRadio = (event: string) => {
+    setShowTranscription(event);
+  };
 
   return (
     <form onSubmit={handleUploadVideo} className="flex flex-col gap-4">
@@ -154,6 +170,23 @@ const FileInput = ({ setVideoId }: SetVideoProps) => {
           className="min-h-[5rem]  leading-relaxed"
           placeholder="Inclua palavras-chave mencionadas no vídeo separadas por vírgula"
         />
+      </div>
+      <div className="flex flex-col w-full gap-2 mb-2">
+        <label>Exibir transcrição do vídeo:</label>
+        <RadioGroup
+          defaultValue="false"
+          className="flex-row flex gap-10"
+          onValueChange={handleRadio}
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="false" id="option-one" />
+            <Label htmlFor="option-one">Não</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="true" id="option-two" />
+            <Label htmlFor="option-two">Sim</Label>
+          </div>
+        </RadioGroup>
       </div>
       <Button
         type="submit"
