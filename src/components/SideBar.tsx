@@ -47,10 +47,10 @@ const SideBar = ({
     }
   };
   return (
-    <div className="w-full flex flex-col  md:w-80 md:order-2 gap-y-4">
+    <div className="w-full flex flex-col  md:w-80 md:order-2 gap-y-4 h-auto ">
       <FileInput setVideoId={setVideoIdContext} />
       <Separator />
-      <form onSubmit={handleSubmit} className="flex gap-y-6 flex-col">
+      <form onSubmit={handleSubmit} className="flex gap-y-6 flex-col ">
         <div className="flex flex-col gap-y-2">
           <Label>Prompt</Label>
           <PromptSelect handlePromptSelected={setInput} input={input} />

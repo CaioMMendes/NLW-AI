@@ -26,9 +26,9 @@ export default function Home() {
     },
   });
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col max-w-[2000px]  justify-center items-center w-full m-auto">
       <Header />
-      <main className="flex flex-1 p-5 gap-4 flex-col md:flex-row">
+      <main className="flex flex-1 p-5 gap-4 flex-col md:flex-row ">
         <TextAreas
           input={input}
           handleInputChange={handleInputChange}

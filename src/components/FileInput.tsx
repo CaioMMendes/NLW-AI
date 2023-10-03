@@ -136,7 +136,7 @@ const FileInput = ({ setVideoId }: SetVideoProps) => {
         htmlFor="video"
         className=" w-full h-full  border flex rounded-lg aspect-video items-center justify-center
           cursor-pointer border-dashed text-sm flex-col gap-2 text-muted-foreground
-           border-inputBorderLight dark:border-inputBorderDark hover:bg-primary/5 relative"
+           border-inputBorderLight dark:md:border-zinc-500 dark:border-zinc-400 hover:bg-primary/5 relative"
       >
         {previewURL ? (
           <video
