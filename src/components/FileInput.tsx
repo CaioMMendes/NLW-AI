@@ -76,46 +76,54 @@ const FileInput = ({ setVideoId }: SetVideoProps) => {
   };
 
   const handleUploadVideo = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const prompt = promptInputRef.current?.value;
-    if (!videoFile) {
-      return alert("Selecione um vídeo");
-    }
-    setStatus("converting");
-
-    //converter vídeo em áudio
-    const audioFile = await convertVideoToAudio(videoFile);
-
-    const data = new FormData();
-    data.append("file", audioFile);
-    const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-    setStatus("uploading");
-    const response = await fetch(`${baseURL}/videos`, {
-      method: "POST",
-      body: data,
-    });
-    const jsonResponse = await response.json();
-    const videoId = jsonResponse.id;
-
-    setStatus("generating");
-    const transcription = await fetch(
-      `${baseURL}/videos/${videoId}/transcription`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Defina o cabeçalho Content-Type
-        },
-        body: JSON.stringify({
-          prompt,
-          AI: "chatGpt",
-        }),
+    try {
+      event.preventDefault();
+      const prompt = promptInputRef.current?.value;
+      if (!videoFile) {
+        return alert("Selecione um vídeo");
       }
-    );
-    const jsonTranscription = await transcription.json();
+      setStatus("converting");
 
-    setTranscriptionContext(jsonTranscription.transcription);
-    setStatus("success");
-    setVideoId(videoId);
+      //converter vídeo em áudio
+      const audioFile = await convertVideoToAudio(videoFile);
+
+      const data = new FormData();
+      data.append("file", audioFile);
+      const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+      setStatus("uploading");
+      const response = await fetch(`${baseURL}/videos`, {
+        method: "POST",
+        body: data,
+      });
+      const jsonResponse = await response.json();
+      const videoId = jsonResponse.id;
+
+      setStatus("generating");
+      const transcription = await fetch(
+        `${baseURL}/videos/${videoId}/transcription`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Defina o cabeçalho Content-Type
+          },
+          body: JSON.stringify({
+            prompt,
+            AI: "chatGpt",
+          }),
+        }
+      );
+      const jsonTranscription = await transcription.json();
+      if (jsonTranscription?.error) {
+        throw new Error(jsonTranscription?.message);
+      }
+
+      setTranscriptionContext(jsonTranscription.transcription);
+      setStatus("success");
+      setVideoId(videoId);
+    } catch (error) {
+      setStatus("waiting");
+      alert("Ocorreu um erro, recarregue a página e tente novamente");
+    }
   };
 
   const previewURL = useMemo(() => {
