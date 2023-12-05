@@ -13,6 +13,9 @@ export default function Home() {
     handleInputChange,
     handleSubmit,
     completion,
+    setCompletion,
+    complete,
+
     isLoading,
   } = useCompletion({
     api: `${process.env.NEXT_PUBLIC_BASE_URL}/ai/complete`,

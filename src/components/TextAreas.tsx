@@ -12,6 +12,7 @@ interface TextAreaProps {
 
 const TextAreas = ({ input, handleInputChange, completion }: TextAreaProps) => {
   const { showTranscription, transcriptionContext } = useGlobalContext();
+  // console.log(completion);
   return (
     <>
       <div
