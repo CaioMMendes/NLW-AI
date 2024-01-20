@@ -44,5 +44,6 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 ## 💻 O projeto pode ser vizualizado acessando o seguinte link
 
-Back-end: <https://github.com/CaioMMendes/NLW-AI-Server>
 Deploy: <https://ai-video-tools.vercel.app/>
+
+Back-end: <https://github.com/CaioMMendes/NLW-AI-Server>
