@@ -1,11 +1,11 @@
 
 <div align="center" style="justify-content:center; display:flex; flex-direction:column; gap:20px">
-<img  title="Imagem do projeto web dark" src="https://cdn.discordapp.com/attachments/1124406159328170034/1155979540435304458/image.png" alt="Imagem do projeto web dark"  />
-<img  title="Imagem do projeto web light" src="https://cdn.discordapp.com/attachments/1124406159328170034/1155979701056188486/image.png" alt="Imagem do projeto web light"  />
+<img  title="Imagem do projeto web dark" src="./github/desktop1.png" alt="Imagem do projeto web dark"  />
+<img  title="Imagem do projeto web light" src="./github/desktop2.png" alt="Imagem do projeto web light"  />
 
 <div style="display:flex; justify-content:space-between; ">
-<img width="40%" title="Imagem do projeto mobile dark" src="https://cdn.discordapp.com/attachments/1124406159328170034/1155979871428808714/image.png" alt="Imagem do projeto mobile dark"  />
-<img width="40%"  title="Imagem do projeto mobile light" src="https://cdn.discordapp.com/attachments/1124406159328170034/1155979936901902479/image.png" alt="Imagem do projeto mobile light"  />
+<img width="40%" title="Imagem do projeto mobile dark" src="./github/mobile1.png" alt="Imagem do projeto mobile dark"  />
+<img width="40%"  title="Imagem do projeto mobile light" src="./github/mobile2.png" alt="Imagem do projeto mobile light"  />
 </div>
 
 </div>
@@ -40,7 +40,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 ## 📆  Exemplo
 
-<img   src="https://cdn.discordapp.com/attachments/1124406159328170034/1155983182534033499/Design_sem_nome_4.gif" alt="Gif do projeto" height="400" width="400" title='Exemplo do projeto' />
+<img   src="./github/gif.gif" alt="Gif do projeto" height="324" width="600" title='Exemplo do projeto' />
 
 ## 💻 O projeto pode ser vizualizado acessando o seguinte link
 
